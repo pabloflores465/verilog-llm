@@ -1,0 +1,15 @@
+{
+  "id": "pablofloresmollinedo/verilog-sota-training",
+  "title": "verilog-sota-training",
+  "code_file": "kaggle_script.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "pablofloresmollinedo/verilog-curated-dataset"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Data
+data/*.jsonl
+data/*.json
+data/*.csv
+!data/.gitkeep
+
+# Models & checkpoints
+checkpoints/
+*.bin
+*.safetensors
+*.gguf
+*.mlx
+
+# Outputs
+results/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kaggle
+/kaggle/

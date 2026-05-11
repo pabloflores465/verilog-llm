@@ -1,0 +1,87 @@
+# Qwen2.5-Coder-14B QLoRA Fine-tuning Config for Verilog
+
+model:
+  base_model: "Qwen/Qwen2.5-Coder-14B-Instruct"
+  trust_remote_code: true
+  torch_dtype: "bfloat16"
+
+quantization:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: "bfloat16"
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: "nf4"
+
+lora:
+  r: 64
+  lora_alpha: 128
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  lora_dropout: 0.05
+  bias: "none"
+  task_type: "CAUSAL_LM"
+  use_rslora: false
+
+training:
+  output_dir: "/kaggle/working/checkpoints"
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 0.3
+  weight_decay: 0.001
+  optim: "paged_adamw_8bit"
+  group_by_length: true
+  max_seq_length: 2048
+  packing: false
+  gradient_checkpointing: true
+  report_to: "none"  # Change to "wandb" or "tensorboard" if needed
+
+  # Checkpointing
+  save_strategy: "steps"
+  save_steps: 100
+  save_total_limit: 3
+
+  # Evaluation
+  evaluation_strategy: "steps"
+  eval_steps: 200
+  load_best_model_at_end: false
+
+  # Hub
+  push_to_hub: true
+  hub_model_id: "pabloflores/verilog-qwen-14b-sota"
+  hub_strategy: "checkpoint"
+  hub_token: "HF_TOKEN_PLACEHOLDER"
+
+  # Logging
+  logging_steps: 10
+
+dataset:
+  train_file: "/kaggle/input/verilog-dataset/train.jsonl"
+  eval_file: "/kaggle/input/verilog-dataset/eval.jsonl"
+  format: "chat"  # chat or fim
+  chat_template: true
+
+# Verilog-specific techniques
+techniques:
+  # CodeV: Add language tags
+  use_language_tags: true
+  language_tag: "<verilog>"
+
+  # HaVen: Symbolic Interpretation CoT
+  use_sicot: true
+  sicot_instruction: |
+    First, interpret any symbols (truth tables, state diagrams, waveforms) into natural language.
+    Then write the Verilog code.
+
+  # VeriReason: Reasoning blocks
+  use_reasoning: true
+  reasoning_template: "<think>\n{reasoning}\n</think>\n<answer>\n{code}\n</answer>"
