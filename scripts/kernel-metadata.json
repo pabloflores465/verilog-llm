@@ -1,6 +1,6 @@
 {
-  "id": "pablofloresmollinedo/verilog-sota-training",
-  "title": "verilog-sota-training",
+  "id": "pablofloresmollinedo/verilog-qwen-training-v2",
+  "title": "verilog-qwen-training-v2",
   "code_file": "kaggle_script.py",
   "language": "python",
   "kernel_type": "script",
