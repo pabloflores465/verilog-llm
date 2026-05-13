@@ -91,3 +91,13 @@ MODEL_14B = ModelConfig(
     num_attention_heads=40,
     num_key_value_heads=8,
 )
+
+# Preset for 14B TPU training with filtering
+TRAIN_14B = TrainConfig(
+    max_seq_length=2048,
+    batch_size=1,
+    grad_accum=4,
+    learning_rate=2e-4,
+    num_epochs=3,
+    save_steps=100,
+)

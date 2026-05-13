@@ -76,12 +76,14 @@ The notebook will:
 
 ## Expected Performance
 
-| Config | Step time | Total time (1 epoch) |
-|--------|-----------|---------------------|
-| 7B, seq 2048, batch 1×8, grad accum 4 | ~3-5s | ~6-10h |
-| 14B, seq 1024, batch 1, grad accum 4 (SPMD) | ~8-12s | ~12-18h |
+| Config | Step time | Total time (3 epochs) |
+|--------|-----------|----------------------|
+| 14B, seq 2048, batch 1, grad accum 4 (SPMD) | ~10-15s | ~2-3 days |
+| 7B, seq 2048, batch 1×8, grad accum 4 (DP) | ~3-5s | ~6-10h |
 
 Compare to GPU (2×T4): ~75s/step → **15-25× speedup**
+
+**Default**: 14B, 3 epochs, seq 2048, filter overlength examples
 
 ## Checkpoint Format
 

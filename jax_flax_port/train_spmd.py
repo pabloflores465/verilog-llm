@@ -153,8 +153,8 @@ def make_pjit_train_step(model: FlaxQwen2ForCausalLM, grad_accum: int, mesh: Mes
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default="14b", choices=["14b"])
-    parser.add_argument("--epochs", type=int, default=1)
-    parser.add_argument("--max_seq_length", type=int, default=1024)
+    parser.add_argument("--epochs", type=int, default=3)
+    parser.add_argument("--max_seq_length", type=int, default=2048)
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--grad_accum", type=int, default=4)
     parser.add_argument("--lr", type=float, default=2e-4)
