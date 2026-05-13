@@ -7,6 +7,9 @@ cd verilog-llm/tpu
 kaggle kernels push -p .
 ```
 
+**NOTE:** TPU on Kaggle requires **notebook format** (`.ipynb`), not script (`.py`).
+The kernel uses `kaggle_tpu_fsdp.ipynb` with `"kernel_type": "notebook"`.
+
 ## Requirements
 
 - Kaggle account with **phone verification** (required for TPU access)
@@ -15,7 +18,7 @@ kaggle kernels push -p .
 
 ## Architecture: SPMD FSDP
 
-Este script usa **SPMD (Single Program Multiple Data)** con `torch_xla.experimental.xla_sharding` para shard el modelo Qwen 14B a través de los 8 cores del TPU v3-8.
+Este notebook usa **SPMD (Single Program Multiple Data)** con `torch_xla.experimental.xla_sharding` para shard el modelo Qwen 14B a través de los 8 cores del TPU v3-8.
 
 ```
 Mesh shape: (1, 8, 1)  -> (dp=1, fsdp=8, mp=1)
@@ -39,9 +42,10 @@ Mesh shape: (1, 8, 1)  -> (dp=1, fsdp=8, mp=1)
 
 | File | Purpose |
 |------|---------|
-| `kaggle_tpu_fsdp_script.py` | Main training script (SPMD + manual loop) |
+| `kaggle_tpu_fsdp.ipynb` | **Kaggle notebook** (required for TPU) — contains all training code |
+| `kaggle_tpu_fsdp_script.py` | Source Python script (for reference) |
 | `spmd_util.py` | Model sharding rules for Qwen/LLaMA/Mistral/etc |
-| `kernel-metadata.json` | Kaggle kernel metadata |
+| `kernel-metadata.json` | Kaggle kernel metadata (points to `.ipynb`) |
 
 ## Dataset Filtering
 
