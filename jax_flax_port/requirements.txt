@@ -1,0 +1,22 @@
+# JAX/Flax stack for TPU v3-8
+# Note: JAX is pre-installed on Kaggle TPU VMs.
+# Only install the additional packages below.
+
+flax>=0.8.0
+optax>=0.2.0
+transformers>=4.40.0
+datasets>=2.14.0
+huggingface-hub>=0.20.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0,<5.0.0
+
+# TensorFlow needed for tf.data pipeline (lightweight, no GPU needed)
+tensorflow-cpu>=2.15.0
+
+# For weight conversion from PyTorch safetensors
+torch>=2.0.0
+safetensors>=0.4.0
+
+# Utilities
+numpy>=1.24.0
+tqdm>=4.65.0
