@@ -38,9 +38,14 @@ cells.append(cell("markdown", [
 
 # Cell 1: Install
 cells.append(cell("code", [
-    "# Kaggle TPU VM has torch 2.8.0 pre-installed",
-    "# MUST install matching torch_xla 2.8.0 (NOT 2.9.0 which is incompatible)",
-    "!pip install -q https://storage.googleapis.com/pytorch-xla-releases/wheels/tpuvm/torch_xla-2.8.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "# CRITICAL: Install torch + torch_xla with EXACT wheels Kaggle TPU Dockerfile uses",
+    "# Kaggle TPU config: torch==2.8.0+cpu, torchvision==0.23.0+cpu, torchaudio==2.8.0+cpu, torch_xla==2.8.0",
+    "# The pre-installed torch in notebook may differ, so we force-reinstall to match torch_xla",
+    "!pip install -q --force-reinstall \\",
+    "    https://download.pytorch.org/whl/cpu/torch-2.8.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl \\",
+    "    https://download.pytorch.org/whl/cpu/torchvision-0.23.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl \\",
+    "    https://download.pytorch.org/whl/cpu/torchaudio-2.8.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl \\",
+    "    https://storage.googleapis.com/pytorch-xla-releases/wheels/tpuvm/torch_xla-2.8.0-cp312-cp312-manylinux_2_28_x86_64.whl",
     "!pip install -q transformers>=4.40.0 peft datasets accelerate huggingface-hub sentencepiece",
     "!pip install -q \"protobuf>=5.29.1,<6.0.0\" kagglehub",
     "print('Done installing')"
