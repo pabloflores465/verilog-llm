@@ -101,3 +101,14 @@ TRAIN_14B = TrainConfig(
     num_epochs=3,
     save_steps=100,
 )
+
+# Optimal config: 7B, full dataset (19K), 3 epochs, data parallelism on 8 TPU cores
+TRAIN_OPTIMAL = TrainConfig(
+    max_seq_length=2048,
+    batch_size=1,
+    grad_accum=4,
+    learning_rate=2e-4,
+    num_epochs=3,
+    save_steps=100,
+    log_every=10,
+)

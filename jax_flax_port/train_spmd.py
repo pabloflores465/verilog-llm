@@ -102,9 +102,12 @@ def make_pjit_train_step(model: FlaxQwen2ForCausalLM, grad_accum: int, mesh: Mes
             total_loss = 0.0
             micro_size = batch_input_ids.shape[0] // grad_accum
 
-            for i in range(grad_accum):
+            effective_accum = min(grad_accum, batch_input_ids.shape[0])
+            for i in range(effective_accum):
                 start = i * micro_size
-                end = start + micro_size
+                end = start + micro_size if micro_size > 0 else start + 1
+                if start >= batch_input_ids.shape[0]:
+                    break
                 dropout_rng, step_rng = random.split(dropout_rng)
 
                 def loss_fn(params):
@@ -119,8 +122,8 @@ def make_pjit_train_step(model: FlaxQwen2ForCausalLM, grad_accum: int, mesh: Mes
                 accum_grads = jax.tree_map(lambda a, g: a + g, accum_grads, grads)
                 total_loss += loss
 
-            loss = total_loss / grad_accum
-            grads = jax.tree_map(lambda g: g / grad_accum, accum_grads)
+            loss = total_loss / effective_accum
+            grads = jax.tree_map(lambda g: g / effective_accum, accum_grads)
 
         state = state.replace(dropout_rng=dropout_rng)
         state = state.apply_gradients(grads=grads)
@@ -156,7 +159,7 @@ def main():
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--max_seq_length", type=int, default=2048)
     parser.add_argument("--batch_size", type=int, default=1)
-    parser.add_argument("--grad_accum", type=int, default=4)
+    parser.add_argument("--grad_accum", type=int, default=1)
     parser.add_argument("--lr", type=float, default=2e-4)
     parser.add_argument("--save_steps", type=int, default=100)
     parser.add_argument("--from_jax_weights", default="/kaggle/working/qwen_jax_weights.npz")

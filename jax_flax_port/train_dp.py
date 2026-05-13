@@ -227,7 +227,7 @@ def shard_batch(batch_input_ids: np.ndarray, batch_labels: np.ndarray, devices):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="7b", choices=["7b", "14b"])
+    parser.add_argument("--model", default="7b", choices=["7b"])
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--max_seq_length", type=int, default=2048)
     parser.add_argument("--batch_size", type=int, default=1)

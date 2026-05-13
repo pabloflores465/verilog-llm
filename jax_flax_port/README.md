@@ -78,12 +78,30 @@ The notebook will:
 
 | Config | Step time | Total time (3 epochs) |
 |--------|-----------|----------------------|
+| **7B, seq 2048, batch 1×8, grad accum 4 (DP)** | **~3-5s** | **~10h** |
 | 14B, seq 2048, batch 1, grad accum 4 (SPMD) | ~10-15s | ~2-3 days |
-| 7B, seq 2048, batch 1×8, grad accum 4 (DP) | ~3-5s | ~6-10h |
 
 Compare to GPU (2×T4): ~75s/step → **15-25× speedup**
 
-**Default**: 14B, 3 epochs, seq 2048, filter overlength examples
+## Recommended Configuration (Optimal)
+
+**Model**: 7B (`Qwen/Qwen2.5-Coder-7B-Instruct`)
+**Dataset**: Full 19,000 examples (all fit within 2048 tokens)
+**Epochs**: 3
+**Global batch**: 8 (1 per TPU core × 8 cores)
+**Gradient accumulation**: 4
+**Effective batch size**: 32
+**Steps**: 7,125 (2,375/epoch)
+**Estimated time**: **~10 hours**
+**Kaggle TPU quota**: 20h/week → fits with 50% margin
+
+**Why 7B over 14B?**
+- RTLCoder proved 7B surpasses GPT-3.5 on VerilogEval
+- 7B is 2-3× faster than 14B on TPU
+- Data parallelism (pmap) is more stable than SPMD (pjit)
+- Full dataset × 3 epochs > small subset with marginal gains from 14B
+
+**Default**: 7B, 3 epochs, seq 2048, full dataset
 
 ## Checkpoint Format
 
