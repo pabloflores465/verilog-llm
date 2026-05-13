@@ -40,7 +40,7 @@ cells.append(cell("markdown", [
 cells.append(cell("code", [
     "!pip install -q -U transformers>=4.40.0 peft datasets accelerate huggingface-hub sentencepiece",
     "!pip install -q -U \"protobuf>=5.29.1,<6.0.0\" kagglehub",
-    "# torch_xla is pre-installed on Kaggle TPU VMs - DO NOT pip install",
+    "!pip install -q 'torch_xla[tpuvm]'",
     "print('Done installing')"
 ]))
 
