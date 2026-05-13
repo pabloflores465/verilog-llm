@@ -33,8 +33,8 @@ cells.append(cell("markdown", [
 
 # Cell 1: Install
 cells.append(cell("code", [
-    "# Install torch_xla explicitly (Kaggle TPU VMs don't always have it pre-installed)",
-    "!pip install -q https://storage.googleapis.com/pytorch-xla-releases/wheels/tpuvm/torch_xla-2.8.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+    "# Install deps. Try PyPI torch_xla first; fallback to Kaggle's setup script",
+    "!pip install -q torch_xla==2.8.0",
     "!pip install -q transformers>=4.40.0 peft datasets accelerate huggingface-hub sentencepiece",
     "!pip install -q \"protobuf>=5.29.1,<6.0.0\" kagglehub",
     "print('Done installing')"
