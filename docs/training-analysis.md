@@ -95,11 +95,30 @@ The training is **functionally correct** but **prohibitively slow**:
 - **Cons**: A100 costs ~$1.20/hour on Colab Pro; L4 is ~$0.80/hour
 - **Verdict**: 💰 Viable if willing to pay ~$20-30
 
+### Option F: Switch to Kaggle TPU v3-8 ⭐ NEW
+- **Pros**:
+  - **20 hours/week TPU quota** (separate from GPU quota)
+  - **~10-15s/step** (5-7× faster than T4)
+  - 128GB HBM total = no quantization needed, native bfloat16
+  - 7B model in bfloat16 fits in **1 core** (16GB) with room to spare
+  - 1 epoch, seq 2048, 7B = **~15-20 hours** ✅ fits in TPU quota
+- **Cons**:
+  - Requires porting code (no bitsandbytes, use bfloat16)
+  - TPU v3-8 needs phone-verified Kaggle account
+  - 14B model requires FSDP multi-core (more complex)
+- **Verdict**: ✅ **Best speed/cost for free tier**
+
 ## Recommendation
 
-**Go with Option D**: Switch to `Qwen2.5-Coder-7B-Instruct`, 1 epoch, seq 1024.
+**Primary: Option F** — Use Kaggle TPU v3-8 with 7B model, bfloat16, 1-3 epochs.
+- Script: `tpu/kaggle_tpu_script.py`
+- Push: `cd tpu && kaggle kernels push -p .`
+- TPU quota is separate from GPU quota (20h/week)
+- ~5-7× faster than T4
 
-This is the only configuration that completes within Kaggle's free GPU allowance while still producing a usable model for Verilog generation.
+**Fallback: Option D** — If TPU is unavailable or has issues, use GPU with 7B + 1 epoch + seq 1024.
+
+See `tpu/README.md` for TPU-specific setup and limitations.
 
 ## Checkpoints Uploaded
 
