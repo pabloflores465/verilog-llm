@@ -1,7 +1,7 @@
 {
   "id": "pablofloresmollinedo/verilog-qwen-training-tpu-v2",
   "title": "Verilog Qwen Training TPU v2",
-  "code_file": "kaggle_tpu_fsdp.ipynb",
+  "code_file": "kaggle_tpu_simple.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": false,
