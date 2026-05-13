@@ -1,7 +1,7 @@
 {
   "id": "pablofloresmollinedo/verilog-qwen-training-tpu",
-  "title": "Verilog Qwen Training TPU",
-  "code_file": "kaggle_tpu_script.py",
+  "title": "Verilog Qwen 14B Training TPU SPMD",
+  "code_file": "kaggle_tpu_fsdp_script.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": false,
