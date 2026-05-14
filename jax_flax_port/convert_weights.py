@@ -11,8 +11,7 @@ from typing import Any, Dict
 import numpy as np
 import jax.numpy as jnp
 from huggingface_hub import hf_hub_download, snapshot_download
-from safetensors.torch import load_file as load_safetensors
-import torch
+from safetensors.numpy import load_file as load_safetensors
 
 from config import ModelConfig, MODEL_7B, MODEL_14B
 
@@ -38,7 +37,7 @@ def load_pytorch_state_dict(model_name: str) -> Dict[str, np.ndarray]:
             print(f"  Loading {f.name} ...")
             chunk = load_safetensors(str(f))
             for k, v in chunk.items():
-                state_dict[k] = v.cpu().numpy()
+                state_dict[k] = v
 
     # Also load config to verify
     with open(Path(local_path) / "config.json") as f:
