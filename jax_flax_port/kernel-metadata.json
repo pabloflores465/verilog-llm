@@ -1,0 +1,16 @@
+{
+  "id": "pabloflores-mollinedo/verilog-qwen-jax-flax",
+  "title": "Verilog Qwen JAX/Flax TPU Training",
+  "code_file": "kaggle_notebook.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": false,
+  "enable_tpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "pablofloresmollinedo/verilog-curated-dataset"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}
